@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi người em thương!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffebee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        h1 { color: #d32f2f; margin-bottom: 10px; }
+        p { font-size: 1.2rem; color: #555; }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #yesBtn { background-color: #ff4081; color: white; }
+        #noBtn { background-color: #9e9e9e; color: white; position: relative; }
+
+        /* Hiệu ứng tim bay */
+        .heart {
+            position: absolute;
+            color: #ff4081;
+            font-size: 20px;
+            animation: move 3s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes move {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Chào anh! ❤️</h1>
+        <p id="question">Làm người yêu em nhé?</p>
+        <div class="buttons">
+            <button id="yesBtn">Đồng ý luôn! 🥰</button>
+            <button id="noBtn">Mơ đi nhé 😜</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const question = document.getElementById('question');
+
+        // Khi di chuột vào nút No, nó sẽ chạy mất
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+
+        // Khi nhấn nút Yes
+        yesBtn.addEventListener('click', () => {
+            question.innerHTML = "Em biết mà! Yêu anh nhất trên đời! 😘";
+            document.querySelector('.buttons').style.display = 'none';
+            startHearts();
+        });
+
+        // Tạo hiệu ứng tim bay
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        function startHearts() {
+            setInterval(createHeart, 300);
+        }
+    </script>
+</body>
+</html>

@@ -3,111 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi người em thương!</title>
+    <title>Gửi anh... ❤️</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffebee;
+            background: #fff0f6; /* Màu hồng nhạt nữ tính */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            text-align: center;
         }
-
         .container {
             background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 10;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            z-index: 2;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid #ffc1e3;
         }
-
-        h1 { color: #d32f2f; margin-bottom: 10px; }
-        p { font-size: 1.2rem; color: #555; }
-
-        .buttons {
-            margin-top: 30px;
+        h1 { color: #ff4d6d; font-size: 1.3rem; line-height: 1.6; margin-bottom: 20px; }
+        
+        .stars {
             display: flex;
+            flex-direction: row-reverse;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
         }
-
-        button {
-            padding: 10px 25px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 10px;
+        .stars input { display: none; }
+        .stars label {
+            font-size: 45px;
+            color: #eee;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+        }
+        .stars input:checked ~ label,
+        .stars label:hover,
+        .stars label:hover ~ label {
+            color: #ff758f;
+            transform: scale(1.2) rotate(5deg);
         }
 
-        #yesBtn { background-color: #ff4081; color: white; }
-        #noBtn { background-color: #9e9e9e; color: white; position: relative; }
+        #response-msg {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: #c9184a;
+            font-style: italic;
+            min-height: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        /* Hiệu ứng tim bay */
-        .heart {
+        .heart-pop {
             position: absolute;
-            color: #ff4081;
-            font-size: 20px;
-            animation: move 3s linear infinite;
-            opacity: 0;
+            pointer-events: none;
+            animation: fly 2s ease-out forwards;
+            z-index: 1;
         }
-
-        @keyframes move {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        @keyframes fly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Chào anh! ❤️</h1>
-        <p id="question">Làm người yêu em nhé?</p>
-        <div class="buttons">
-            <button id="yesBtn">Đồng ý luôn! 🥰</button>
-            <button id="noBtn">Mơ đi nhé 😜</button>
+        <h1>Anh à, nếu phải chấm điểm mức độ "đáng yêu" của em trong lòng anh, anh cho em mấy sao? 🎀</h1>
+        <div class="stars">
+            <input type="radio" id="s5" name="star" onclick="rate(5)"><label for="s5">★</label>
+            <input type="radio" id="s4" name="star" onclick="rate(4)"><label for="s4">★</label>
+            <input type="radio" id="s3" name="star" onclick="rate(3)"><label for="s3">★</label>
+            <input type="radio" id="s2" name="star" onclick="rate(2)"><label for="s2">★</label>
+            <input type="radio" id="s1" name="star" onclick="rate(1)"><label for="s1">★</label>
         </div>
+        <div id="response-msg">Anh chọn thử xem...</div>
     </div>
 
     <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const question = document.getElementById('question');
-
-        // Khi di chuột vào nút No, nó sẽ chạy mất
-        noBtn.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
-        });
-
-        // Khi nhấn nút Yes
-        yesBtn.addEventListener('click', () => {
-            question.innerHTML = "Em biết mà! Yêu anh nhất trên đời! 😘";
-            document.querySelector('.buttons').style.display = 'none';
-            startHearts();
-        });
-
-        // Tạo hiệu ứng tim bay
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+        function rate(n) {
+            const msg = document.getElementById('response-msg');
+            const messages = [
+                "", 
+                "Ơ... em đáng ghét đến thế sao? Anh làm em buồn rồi đấy 🥺",
+                "Dỗi anh luôn! Em chỉ đáng yêu bấy nhiêu thôi sao? 😿",
+                "3 sao thôi á? Anh chỉ coi em là bạn thôi sao? 👉👈",
+                "4 sao rồi nè! Anh cũng thấy em dễ thương đúng không? =)))",
+                "5 sao luôn! Thế là từ nay em được phép 'bám đuôi' anh rồi nhé? Yêu anh! ❤️✨"
+            ];
+            
+            msg.innerHTML = messages[n];
+            
+            const heartCount = n * 12;
+            for(let i=0; i < heartCount; i++) {
+                createHeart();
+            }
         }
 
-        function startHearts() {
-            setInterval(createHeart, 300);
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '🌸'; // Đổi sang hoa anh đào cho nữ tính hoặc giữ ❤️
+            heart.className = 'heart-pop';
+            heart.style.left = '50vw';
+            heart.style.top = '50vh';
+            
+            const x = (Math.random() - 0.5) * 800;
+            const y = (Math.random() - 0.5) * 800;
+            heart.style.setProperty('--x', `${x}px`);
+            heart.style.setProperty('--y', `${y}px`);
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
         }
     </script>
 </body>

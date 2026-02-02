@@ -1,1 +1,1 @@
-# reting diii
+# rating diii
